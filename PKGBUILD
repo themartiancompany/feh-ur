@@ -168,7 +168,7 @@ pkgname=(
 pkgver=3.12.1
 _commit="4566ff69a7b4bcc0c00c7fd49453098de10aff67"
 _bundle_commit="fb0934d63d26b76cced40dc69a1a9d2eac39c2b1"
-pkgrel=1
+pkgrel=2
 _pkgdesc=(
   'Fast and light imlib2-based image viewer'
 )
@@ -320,6 +320,45 @@ source+=(
 sha256sums+=(
   "${_sum}"
 )
+
+_git_unbundle() {
+  local \
+    _tarname="${1}" \
+    _bundle \
+    _repo \
+    _msg=()
+  _bundle="${srcdir}/${_tarname}.bundle"
+  _repo="${srcdir}/${_tarname}"
+  _msg=(
+    "Cloning '${_bundle}' into '${_repo}'."
+  )
+  msg \
+    "${_msg[*]}"
+  git \
+    clone \
+      "${_bundle}" \
+      "${_repo}" || \
+  git \
+    -C \
+      "${_repo}" \
+      pull || \
+  true
+}
+
+prepare() {
+  local \
+    _bash_files=() \
+    _src
+  if [[ "${_evmfs}" == "true" ]]; then
+    if [[ "${_git}" == "false" ]]; then
+      ur \
+        "never-gonna-give-you-up"
+    elif [[ "${_git}" == "true" ]]; then
+      _git_unbundle \
+        "${_tarname}"
+    fi
+  fi
+}
 
 build() {
   local \

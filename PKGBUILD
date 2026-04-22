@@ -168,7 +168,7 @@ pkgname=(
 pkgver=3.12.1
 _commit="4566ff69a7b4bcc0c00c7fd49453098de10aff67"
 _bundle_commit="fb0934d63d26b76cced40dc69a1a9d2eac39c2b1"
-pkgrel=9
+pkgrel=10
 _pkgdesc=(
   'Fast and light imlib2-based image viewer'
 )
